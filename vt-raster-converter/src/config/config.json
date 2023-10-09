@@ -1,0 +1,10 @@
+{
+    "server": {
+        "port": 8081
+    }, 
+    "styles": {
+        "by_style_standard": {
+            "file": "by_style_standard.json"
+        }
+    }
+}
