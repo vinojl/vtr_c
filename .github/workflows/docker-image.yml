@@ -1,0 +1,36 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GHCR_TOKEN }}
+    - name: Build the Docker image
+      run: | 
+        cd vt-raster-converter
+        docker build . --file Dockerfile --tag ghcr.io/vinojl/vtr_c:latest
+        docker push ghcr.io/vinojl/vtr_c:latest
+
+
+# name: publish
+# on: [push]
+# jobs:
+#   publish-hello-world-image:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v2
+
+#     - name: Build the hello-world Docker image
+#       run: |
+#         echo $CR_PAT | docker login ghcr.io -u YourAccountOrGHOrgaNameHere --password-stdin
+#       env:
+#         CR_PAT: ${{ secrets.CR_PAT }}
